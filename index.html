@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Interaktive Karte</title>
     <style>
-        /* --- BASIS LAYOUT --- */
         body { 
             margin: 0; padding: 0; 
             background-color: #eef2f3; 
@@ -14,39 +13,22 @@
         }
 
         .scale-wrapper { 
-            width: 100%; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            padding: 10px;
-            box-sizing: border-box;
+            width: 100%; display: flex; justify-content: center; align-items: center; 
+            padding: 10px; box-sizing: border-box;
         }
 
-        /* --- RESPONSIVE BÜHNE --- */
         .card-stage { 
             perspective: 2000px; 
-            width: 95vw; 
-            max-width: 800px; 
-            height: 71vw; /* Entspricht dem 4:3 Verhältnis bei 800px Breite */
-            max-height: 600px;
-            position: relative; 
-            cursor: pointer; 
+            width: 95vw; max-width: 800px; 
+            height: 71vw; max-height: 600px;
+            position: relative; cursor: pointer; 
         }
 
-        .card { 
-            width: 100%; height: 100%; 
-            position: relative; 
-            transform-style: preserve-3d; 
-        }
+        .card { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; }
 
-        /* --- FLÜGEL --- */
         .card-door { 
-            position: absolute; 
-            top: 0; 
-            width: 50.5%; /* Leicht über 50%, damit die 20 in der Mitte perfekt schließt */
-            height: 100%; 
-            z-index: 2; 
-            transform-style: preserve-3d; 
+            position: absolute; top: 0; width: 50.5%; height: 100%; 
+            z-index: 2; transform-style: preserve-3d; 
             transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1); 
         }
 
@@ -54,68 +36,51 @@
         .door-right { right: 0; transform-origin: right center; }
 
         .door-face { 
-            position: absolute; 
-            top: 0; left: 0; 
-            width: 100%; height: 100%; 
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
             backface-visibility: hidden; 
-            background-size: 100% 100%; /* Bild füllt den Flügel exakt aus */
+            /* Neu: Wir nutzen 'cover' aber fixieren die Position, damit die Mitte klebt */
+            background-size: cover;
             background-repeat: no-repeat;
         }
 
         .door-back { transform: rotateY(180deg); }
 
-        /* --- ANIMATION --- */
+        /* --- PRÄZISE AUSRICHTUNG FÜR DIE SEILE --- */
+        .door-left .door-face { background-position: right center; } /* Linke Tür orientiert sich am rechten Rand */
+        .door-right .door-face { background-position: left center; } /* Rechte Tür orientiert sich am linken Rand */
+
         .card-stage.is-open .door-left { transform: rotateY(-170deg); }
         .card-stage.is-open .door-right { transform: rotateY(170deg); }
 
-        /* --- BILDER LINKS --- */
-        
-        /* Mitte (Hintergrund) */
+        /* --- BILDER --- */
         .card-inside { 
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; 
             background-image: url('https://i.postimg.cc/yYNwrrrR/mitte.png'); 
-            background-size: 100% 100%; 
+            background-size: cover; background-position: center;
             box-shadow: 0 10px 30px rgba(0,0,0,0.2); 
         }
 
-        /* Außenflächen (Hier war die 20 abgeschnitten) */
-        .door-left .door-front { 
-            background-image: url('https://i.postimg.cc/rwB3syyL/tu-r-aussen-links.png'); 
-        }
-        .door-right .door-front { 
-            background-image: url('https://i.postimg.cc/Qd2wCNN3/tu-r-aussen-rechts.png'); 
-        }
-
-        /* Innenflächen beim Aufklappen */
-        .door-left .door-back { 
-            background-image: url('https://i.postimg.cc/jdjGkkkd/tu-r-innen-links.png'); 
-        }
-        .door-right .door-back { 
-            background-image: url('https://i.postimg.cc/CxB9wngm/tu-r-innen-rechts.png'); 
-        }
+        .door-left .door-front { background-image: url('https://i.postimg.cc/rwB3syyL/tu-r-aussen-links.png'); }
+        .door-right .door-front { background-image: url('https://i.postimg.cc/Qd2wCNN3/tu-r-aussen-rechts.png'); }
+        .door-left .door-back { background-image: url('https://i.postimg.cc/jdjGkkkd/tu-r-innen-links.png'); }
+        .door-right .door-back { background-image: url('https://i.postimg.cc/CxB9wngm/tu-r-innen-rechts.png'); }
     </style>
 </head>
 <body>
-
     <div class="scale-wrapper">
         <div class="card-stage" onclick="this.classList.toggle('is-open')">
             <div class="card">
-                
                 <div class="card-inside"></div>
-                
                 <div class="card-door door-left">
                     <div class="door-face door-front"></div>
                     <div class="door-face door-back"></div>
                 </div>
-                
                 <div class="card-door door-right">
                     <div class="door-face door-front"></div>
                     <div class="door-face door-back"></div>
                 </div>
-                
             </div>
         </div>
     </div>
-
 </body>
 </html>
