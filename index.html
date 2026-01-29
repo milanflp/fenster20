@@ -39,22 +39,15 @@
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
             backface-visibility: hidden; 
             background-repeat: no-repeat;
-            /* Wir stellen sicher, dass das Bild die volle Höhe nutzt und nicht verzerrt */
-            background-size: auto 100%; 
+            /* Fix: Wir nutzen 100% Breite des Flügels, damit nichts springt */
+            background-size: 100% 100%; 
         }
 
         .door-back { transform: rotateY(180deg); }
 
-        /* --- PRÄZISIONSAUSRICHTUNG FÜR SEILE & LOGO --- */
-        
-        /* Linke Tür: Das Bild klebt am RECHTEN Rand der Tür */
-        .door-left .door-face { background-position: right center; }
-        
-        /* Rechte Tür: Das Bild klebt am LINKEN Rand der Tür */
-        .door-right .door-face { background-position: left center; }
-
-        .card-stage.is-open .door-left { transform: rotateY(-170deg); }
-        .card-stage.is-open .door-right { transform: rotateY(170deg); }
+        /* --- ANIMATION --- */
+        .card-stage.is-open .door-left { transform: rotateY(-130deg); }
+        .card-stage.is-open .door-right { transform: rotateY(130deg); }
 
         /* --- BILDER --- */
         .card-inside { 
@@ -64,13 +57,25 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.2); 
         }
 
-        /* Außenflächen */
-        .door-left .door-front { background-image: url('https://i.postimg.cc/rwB3syyL/tu-r-aussen-links.png'); }
-        .door-right .door-front { background-image: url('https://i.postimg.cc/Qd2wCNN3/tu-r-aussen-rechts.png'); }
+        /* Außenflächen: Hier nutzen wir 100% Breite, damit die Naht perfekt bleibt */
+        .door-left .door-front { 
+            background-image: url('https://i.postimg.cc/rwB3syyL/tu-r-aussen-links.png');
+            background-position: center;
+        }
+        .door-right .door-front { 
+            background-image: url('https://i.postimg.cc/Qd2wCNN3/tu-r-aussen-rechts.png');
+            background-position: center;
+        }
         
-        /* Innenflächen */
-        .door-left .door-back { background-image: url('https://i.postimg.cc/jdjGkkkd/tu-r-innen-links.png'); }
-        .door-right .door-back { background-image: url('https://i.postimg.cc/CxB9wngm/tu-r-innen-rechts.png'); }
+        /* Innenflächen: Hier lag der Fehler beim Laptop - wir fixieren sie jetzt */
+        .door-left .door-back { 
+            background-image: url('https://i.postimg.cc/jdjGkkkd/tu-r-innen-links.png');
+            background-position: center;
+        }
+        .door-right .door-back { 
+            background-image: url('https://i.postimg.cc/CxB9wngm/tu-r-innen-rechts.png');
+            background-position: center;
+        }
     </style>
 </head>
 <body>
