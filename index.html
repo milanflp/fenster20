@@ -16,7 +16,6 @@
             width: 100%; height: 100vh; display: flex; justify-content: center; align-items: center; 
         }
 
-        /* --- DIE KARTE --- */
         .card-stage { 
             perspective: 2000px; 
             width: 90vw; max-width: 800px; 
@@ -27,9 +26,9 @@
 
         .card { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; }
 
-        /* Türen leicht breiter machen (50.5%), um den Spalt am Seil zu schließen */
+        /* Türen exakt auf 50% ohne Überlappung */
         .card-door { 
-            position: absolute; top: 0; width: 50.5%; height: 100%; 
+            position: absolute; top: 0; width: 50%; height: 100%; 
             z-index: 2; transform-style: preserve-3d; 
             transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1); 
         }
@@ -40,18 +39,20 @@
         .door-face { 
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
             backface-visibility: hidden; 
-            background-size: cover; /* 'cover' sorgt für lückenlose Füllung */
             background-repeat: no-repeat;
+            /* WICHTIG: 100.5% Breite verhindert den weißen Spalt durch Rundungsfehler */
+            background-size: 100.5% 100%; 
         }
 
         .door-back { transform: rotateY(180deg); }
 
-        /* --- SEIL-AUSRICHTUNG --- */
-        /* Linkes Bild klebt rechts, rechtes Bild klebt links -> Seil trifft sich */
+        /* --- DIE LÖSUNG FÜR DAS SEIL --- */
+        /* Linke Tür: Das Bild wird ganz nach RECHTS geschoben */
         .door-left .door-front { 
             background-image: url('https://i.postimg.cc/rwB3syyL/tu-r-aussen-links.png');
             background-position: right center; 
         }
+        /* Rechte Tür: Das Bild wird ganz nach LINKS geschoben */
         .door-right .door-front { 
             background-image: url('https://i.postimg.cc/Qd2wCNN3/tu-r-aussen-rechts.png');
             background-position: left center; 
@@ -82,8 +83,14 @@
             box-shadow: 0 10px 40px rgba(0,0,0,0.3); 
         }
 
-        .door-left .door-back { background-image: url('https://i.postimg.cc/jdjGkkkd/tu-r-innen-links.png'); }
-        .door-right .door-back { background-image: url('https://i.postimg.cc/CxB9wngm/tu-r-innen-rechts.png'); }
+        .door-left .door-back { 
+            background-image: url('https://i.postimg.cc/jdjGkkkd/tu-r-innen-links.png');
+            background-position: right center;
+        }
+        .door-right .door-back { 
+            background-image: url('https://i.postimg.cc/CxB9wngm/tu-r-innen-rechts.png');
+            background-position: left center;
+        }
     </style>
 </head>
 <body>
