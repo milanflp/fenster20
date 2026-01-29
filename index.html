@@ -16,7 +16,7 @@
             width: 100%; height: 100vh; display: flex; justify-content: center; align-items: center; 
         }
 
-        /* --- BASIS (PC & HOCHFORMAT) --- */
+        /* --- DIE KARTE --- */
         .card-stage { 
             perspective: 2000px; 
             width: 90vw; max-width: 800px; 
@@ -27,8 +27,9 @@
 
         .card { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; }
 
+        /* Türen leicht breiter machen (50.5%), um den Spalt am Seil zu schließen */
         .card-door { 
-            position: absolute; top: 0; width: 50.2%; height: 100%; 
+            position: absolute; top: 0; width: 50.5%; height: 100%; 
             z-index: 2; transform-style: preserve-3d; 
             transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1); 
         }
@@ -39,42 +40,41 @@
         .door-face { 
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
             backface-visibility: hidden; 
-            background-size: 100% 100%; background-repeat: no-repeat;
+            background-size: cover; /* 'cover' sorgt für lückenlose Füllung */
+            background-repeat: no-repeat;
         }
 
         .door-back { transform: rotateY(180deg); }
 
-        /* WINKEL PC */
+        /* --- SEIL-AUSRICHTUNG --- */
+        /* Linkes Bild klebt rechts, rechtes Bild klebt links -> Seil trifft sich */
+        .door-left .door-front { 
+            background-image: url('https://i.postimg.cc/rwB3syyL/tu-r-aussen-links.png');
+            background-position: right center; 
+        }
+        .door-right .door-front { 
+            background-image: url('https://i.postimg.cc/Qd2wCNN3/tu-r-aussen-rechts.png');
+            background-position: left center; 
+        }
+
+        /* --- ÖFFNUNGSWINKEL & RESPONSIVE --- */
         .card-stage.is-open .door-left { transform: rotateY(-120deg); }
         .card-stage.is-open .door-right { transform: rotateY(120deg); }
 
-        /* --- HANDY HOCHFORMAT --- */
         @media (max-width: 768px) and (orientation: portrait) {
-            .card-stage.is-open {
-                transform: scale(0.55); 
-            }
+            .card-stage.is-open { transform: scale(0.55); }
             .card-stage.is-open .door-left { transform: rotateY(-140deg); }
             .card-stage.is-open .door-right { transform: rotateY(140deg); }
         }
 
-        /* --- HANDY QUERFORMAT (LANDSCAPE) - OPTIMIERT --- */
         @media (max-height: 500px) and (orientation: landscape) {
-            .card-stage {
-                /* Wir machen die Karte im Querformat etwas kleiner in der Höhe, 
-                   damit die Türen beim Aufschwingen Platz haben */
-                height: 70vh; 
-                width: 93.3vh; /* 4:3 Verhältnis */
-            }
-            .card-stage.is-open {
-                /* Wir zoomen ein Stück weiter raus, um den Flügeln Platz zu geben */
-                transform: scale(0.65); 
-            }
-            /* WICHTIG: Größerer Winkel (145 Grad), damit man den Text lesen kann */
+            .card-stage { height: 70vh; width: 93.3vh; }
+            .card-stage.is-open { transform: scale(0.65); }
             .card-stage.is-open .door-left { transform: rotateY(-145deg); }
             .card-stage.is-open .door-right { transform: rotateY(145deg); }
         }
 
-        /* --- BILDER --- */
+        /* --- INNENBILDER --- */
         .card-inside { 
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; 
             background-image: url('https://i.postimg.cc/yYNwrrrR/mitte.png'); 
@@ -82,8 +82,6 @@
             box-shadow: 0 10px 40px rgba(0,0,0,0.3); 
         }
 
-        .door-left .door-front { background-image: url('https://i.postimg.cc/rwB3syyL/tu-r-aussen-links.png'); }
-        .door-right .door-front { background-image: url('https://i.postimg.cc/Qd2wCNN3/tu-r-aussen-rechts.png'); }
         .door-left .door-back { background-image: url('https://i.postimg.cc/jdjGkkkd/tu-r-innen-links.png'); }
         .door-right .door-back { background-image: url('https://i.postimg.cc/CxB9wngm/tu-r-innen-rechts.png'); }
     </style>
