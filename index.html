@@ -27,7 +27,7 @@
         .card { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; }
 
         .card-door { 
-            position: absolute; top: 0; width: 50.5%; height: 100%; 
+            position: absolute; top: 0; width: 50.1%; height: 100%; 
             z-index: 2; transform-style: preserve-3d; 
             transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1); 
         }
@@ -38,16 +38,20 @@
         .door-face { 
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
             backface-visibility: hidden; 
-            /* Neu: Wir nutzen 'cover' aber fixieren die Position, damit die Mitte klebt */
-            background-size: cover;
             background-repeat: no-repeat;
+            /* Wir stellen sicher, dass das Bild die volle Höhe nutzt und nicht verzerrt */
+            background-size: auto 100%; 
         }
 
         .door-back { transform: rotateY(180deg); }
 
-        /* --- PRÄZISE AUSRICHTUNG FÜR DIE SEILE --- */
-        .door-left .door-face { background-position: right center; } /* Linke Tür orientiert sich am rechten Rand */
-        .door-right .door-face { background-position: left center; } /* Rechte Tür orientiert sich am linken Rand */
+        /* --- PRÄZISIONSAUSRICHTUNG FÜR SEILE & LOGO --- */
+        
+        /* Linke Tür: Das Bild klebt am RECHTEN Rand der Tür */
+        .door-left .door-face { background-position: right center; }
+        
+        /* Rechte Tür: Das Bild klebt am LINKEN Rand der Tür */
+        .door-right .door-face { background-position: left center; }
 
         .card-stage.is-open .door-left { transform: rotateY(-170deg); }
         .card-stage.is-open .door-right { transform: rotateY(170deg); }
@@ -56,12 +60,15 @@
         .card-inside { 
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; 
             background-image: url('https://i.postimg.cc/yYNwrrrR/mitte.png'); 
-            background-size: cover; background-position: center;
+            background-size: 100% 100%;
             box-shadow: 0 10px 30px rgba(0,0,0,0.2); 
         }
 
+        /* Außenflächen */
         .door-left .door-front { background-image: url('https://i.postimg.cc/rwB3syyL/tu-r-aussen-links.png'); }
         .door-right .door-front { background-image: url('https://i.postimg.cc/Qd2wCNN3/tu-r-aussen-rechts.png'); }
+        
+        /* Innenflächen */
         .door-left .door-back { background-image: url('https://i.postimg.cc/jdjGkkkd/tu-r-innen-links.png'); }
         .door-right .door-back { background-image: url('https://i.postimg.cc/CxB9wngm/tu-r-innen-rechts.png'); }
     </style>
