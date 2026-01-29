@@ -16,7 +16,6 @@
             width: 100%; height: 100vh; display: flex; justify-content: center; align-items: center; 
         }
 
-        /* --- BASIS (PC & HOCHFORMAT) --- */
         .card-stage { 
             perspective: 2000px; 
             width: 90vw; max-width: 800px; 
@@ -28,7 +27,7 @@
         .card { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; }
 
         .card-door { 
-            position: absolute; top: 0; width: 50.2%; height: 100%; 
+            position: absolute; top: 0; width: 50.5%; height: 100%; 
             z-index: 2; transform-style: preserve-3d; 
             transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1); 
         }
@@ -44,37 +43,34 @@
 
         .door-back { transform: rotateY(180deg); }
 
-        /* WINKEL PC */
+        /* --- DER SEIL-FIX: PRÄZISE AUSRICHTUNG --- */
+        /* Wir rücken die Bilder an der Nahtstelle zusammen */
+        .door-left .door-front { 
+            background-image: url('https://i.postimg.cc/rwB3syyL/tu-r-aussen-links.png');
+            background-position: 1px center; /* Schiebt das linke Bild 1px nach rechts */
+        }
+        .door-right .door-front { 
+            background-image: url('https://i.postimg.cc/Qd2wCNN3/tu-r-aussen-rechts.png');
+            background-position: -1px center; /* Schiebt das rechte Bild 1px nach links */
+        }
+
         .card-stage.is-open .door-left { transform: rotateY(-120deg); }
         .card-stage.is-open .door-right { transform: rotateY(120deg); }
 
-        /* --- HANDY HOCHFORMAT --- */
         @media (max-width: 768px) and (orientation: portrait) {
-            .card-stage.is-open {
-                transform: scale(0.55); 
-            }
+            .card-stage.is-open { transform: scale(0.55); }
             .card-stage.is-open .door-left { transform: rotateY(-140deg); }
             .card-stage.is-open .door-right { transform: rotateY(140deg); }
         }
 
-        /* --- HANDY QUERFORMAT (LANDSCAPE) - OPTIMIERT --- */
         @media (max-height: 500px) and (orientation: landscape) {
-            .card-stage {
-                /* Wir machen die Karte im Querformat etwas kleiner in der Höhe, 
-                   damit die Türen beim Aufschwingen Platz haben */
-                height: 70vh; 
-                width: 93.3vh; /* 4:3 Verhältnis */
-            }
-            .card-stage.is-open {
-                /* Wir zoomen ein Stück weiter raus, um den Flügeln Platz zu geben */
-                transform: scale(0.65); 
-            }
-            /* WICHTIG: Größerer Winkel (145 Grad), damit man den Text lesen kann */
+            .card-stage { height: 70vh; width: 93.3vh; }
+            .card-stage.is-open { transform: scale(0.65); }
             .card-stage.is-open .door-left { transform: rotateY(-145deg); }
             .card-stage.is-open .door-right { transform: rotateY(145deg); }
         }
 
-        /* --- BILDER --- */
+        /* --- BILDER INNEN & MITTE --- */
         .card-inside { 
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; 
             background-image: url('https://i.postimg.cc/yYNwrrrR/mitte.png'); 
@@ -82,8 +78,6 @@
             box-shadow: 0 10px 40px rgba(0,0,0,0.3); 
         }
 
-        .door-left .door-front { background-image: url('https://i.postimg.cc/rwB3syyL/tu-r-aussen-links.png'); }
-        .door-right .door-front { background-image: url('https://i.postimg.cc/Qd2wCNN3/tu-r-aussen-rechts.png'); }
         .door-left .door-back { background-image: url('https://i.postimg.cc/jdjGkkkd/tu-r-innen-links.png'); }
         .door-right .door-back { background-image: url('https://i.postimg.cc/CxB9wngm/tu-r-innen-rechts.png'); }
     </style>
