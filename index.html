@@ -16,6 +16,7 @@
             width: 100%; display: flex; justify-content: center; align-items: center; 
         }
 
+        /* --- BASIS-EINSTELLUNGEN (PC) --- */
         .card-stage { 
             perspective: 2000px; 
             width: 90vw; max-width: 800px; 
@@ -43,17 +44,17 @@
 
         .door-back { transform: rotateY(180deg); }
 
-        /* --- WINKEL FÜR PC (Große Bildschirme) --- */
+        /* WINKEL FÜR PC: 120 Grad ist sicher gegen Abschneiden */
         .card-stage.is-open .door-left { transform: rotateY(-120deg); }
         .card-stage.is-open .door-right { transform: rotateY(120deg); }
 
-        /* --- SPEZIALANPASSUNG FÜR HANDY --- */
+        /* --- HANDY-ANPASSUNG (Screens kleiner als 768px) --- */
         @media (max-width: 768px) {
-            /* Karte schrumpft am Handy beim Öffnen */
+            /* Wir zoomen weiter raus (0.55), damit die Flügel Platz haben */
             .card-stage.is-open {
-                transform: scale(0.65); 
+                transform: scale(0.55); 
             }
-            /* Am Handy dürfen die Türen etwas weiter aufgehen (140 Grad) */
+            /* Am Handy dürfen sie für den Effekt ruhig 140 Grad schwingen */
             .card-stage.is-open .door-left { transform: rotateY(-140deg); }
             .card-stage.is-open .door-right { transform: rotateY(140deg); }
         }
