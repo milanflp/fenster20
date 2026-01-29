@@ -13,10 +13,10 @@
         }
 
         .scale-wrapper { 
-            width: 100%; display: flex; justify-content: center; align-items: center; 
+            width: 100%; height: 100vh; display: flex; justify-content: center; align-items: center; 
         }
 
-        /* --- BASIS-EINSTELLUNGEN (PC) --- */
+        /* --- BASIS (PC & HOCHFORMAT) --- */
         .card-stage { 
             perspective: 2000px; 
             width: 90vw; max-width: 800px; 
@@ -44,19 +44,31 @@
 
         .door-back { transform: rotateY(180deg); }
 
-        /* WINKEL FÜR PC: 120 Grad ist sicher gegen Abschneiden */
+        /* WINKEL PC */
         .card-stage.is-open .door-left { transform: rotateY(-120deg); }
         .card-stage.is-open .door-right { transform: rotateY(120deg); }
 
-        /* --- HANDY-ANPASSUNG (Screens kleiner als 768px) --- */
-        @media (max-width: 768px) {
-            /* Wir zoomen weiter raus (0.55), damit die Flügel Platz haben */
+        /* --- HANDY HOCHFORMAT --- */
+        @media (max-width: 768px) and (orientation: portrait) {
             .card-stage.is-open {
                 transform: scale(0.55); 
             }
-            /* Am Handy dürfen sie für den Effekt ruhig 140 Grad schwingen */
             .card-stage.is-open .door-left { transform: rotateY(-140deg); }
             .card-stage.is-open .door-right { transform: rotateY(140deg); }
+        }
+
+        /* --- HANDY QUERFORMAT (LANDSCAPE) --- */
+        /* Wenn das Handy gedreht wird und die Höhe klein ist */
+        @media (max-height: 500px) and (orientation: landscape) {
+            .card-stage {
+                height: 80vh; /* Nutzt 80% der verfügbaren Displayhöhe */
+                width: 106.6vh; /* Behält das 4:3 Verhältnis bei */
+            }
+            .card-stage.is-open {
+                transform: scale(0.6); /* Schrumpft ein bisschen, damit Türen passen */
+            }
+            .card-stage.is-open .door-left { transform: rotateY(-110deg); } /* Weniger weit öffnen im Querformat */
+            .card-stage.is-open .door-right { transform: rotateY(110deg); }
         }
 
         /* --- BILDER --- */
