@@ -2,32 +2,33 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Interaktive Karte</title>
     <style>
         body { 
             margin: 0; padding: 0; 
             background-color: #eef2f3; 
             display: flex; justify-content: center; align-items: center; 
-            min-height: 100vh; overflow-x: hidden; 
+            min-height: 100vh; overflow: hidden; 
         }
 
         .scale-wrapper { 
             width: 100%; display: flex; justify-content: center; align-items: center; 
-            padding: 10px; box-sizing: border-box;
         }
 
+        /* DIE BÜHNE - Am PC bleibt alles wie gehabt */
         .card-stage { 
             perspective: 2000px; 
-            width: 95vw; max-width: 800px; 
-            height: 71vw; max-height: 600px;
-            position: relative; cursor: pointer; 
+            width: 90vw; max-width: 800px; 
+            height: 67.5vw; max-height: 600px;
+            position: relative; cursor: pointer;
+            transition: transform 0.8s ease-in-out; 
         }
 
         .card { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; }
 
         .card-door { 
-            position: absolute; top: 0; width: 50.1%; height: 100%; 
+            position: absolute; top: 0; width: 50.2%; height: 100%; 
             z-index: 2; transform-style: preserve-3d; 
             transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1); 
         }
@@ -38,44 +39,37 @@
         .door-face { 
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
             backface-visibility: hidden; 
-            background-repeat: no-repeat;
-            /* Fix: Wir nutzen 100% Breite des Flügels, damit nichts springt */
-            background-size: 100% 100%; 
+            background-size: 100% 100%; background-repeat: no-repeat;
         }
 
         .door-back { transform: rotateY(180deg); }
 
-        /* --- ANIMATION --- */
-        .card-stage.is-open .door-left { transform: rotateY(-130deg); }
-        .card-stage.is-open .door-right { transform: rotateY(130deg); }
+        /* ÖFFNUNGSWINKEL */
+        .card-stage.is-open .door-left { transform: rotateY(-140deg); }
+        .card-stage.is-open .door-right { transform: rotateY(140deg); }
+
+        /* --- DER HANDY-FIX --- 
+           Dieser Teil wird NUR auf Geräten mit kleinem Bildschirm ausgeführt.
+           Er sorgt dafür, dass die Karte beim Öffnen schrumpft, damit die Türen
+           nicht abgeschnitten werden. Am PC bleibt scale(1). */
+        @media (max-width: 768px) {
+            .card-stage.is-open {
+                transform: scale(0.6); 
+            }
+        }
 
         /* --- BILDER --- */
         .card-inside { 
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; 
             background-image: url('https://i.postimg.cc/yYNwrrrR/mitte.png'); 
             background-size: 100% 100%;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2); 
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3); 
         }
 
-        /* Außenflächen: Hier nutzen wir 100% Breite, damit die Naht perfekt bleibt */
-        .door-left .door-front { 
-            background-image: url('https://i.postimg.cc/rwB3syyL/tu-r-aussen-links.png');
-            background-position: center;
-        }
-        .door-right .door-front { 
-            background-image: url('https://i.postimg.cc/Qd2wCNN3/tu-r-aussen-rechts.png');
-            background-position: center;
-        }
-        
-        /* Innenflächen: Hier lag der Fehler beim Laptop - wir fixieren sie jetzt */
-        .door-left .door-back { 
-            background-image: url('https://i.postimg.cc/jdjGkkkd/tu-r-innen-links.png');
-            background-position: center;
-        }
-        .door-right .door-back { 
-            background-image: url('https://i.postimg.cc/CxB9wngm/tu-r-innen-rechts.png');
-            background-position: center;
-        }
+        .door-left .door-front { background-image: url('https://i.postimg.cc/rwB3syyL/tu-r-aussen-links.png'); }
+        .door-right .door-front { background-image: url('https://i.postimg.cc/Qd2wCNN3/tu-r-aussen-rechts.png'); }
+        .door-left .door-back { background-image: url('https://i.postimg.cc/jdjGkkkd/tu-r-innen-links.png'); }
+        .door-right .door-back { background-image: url('https://i.postimg.cc/CxB9wngm/tu-r-innen-rechts.png'); }
     </style>
 </head>
 <body>
