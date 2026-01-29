@@ -57,18 +57,21 @@
             .card-stage.is-open .door-right { transform: rotateY(140deg); }
         }
 
-        /* --- HANDY QUERFORMAT (LANDSCAPE) --- */
-        /* Wenn das Handy gedreht wird und die Höhe klein ist */
+        /* --- HANDY QUERFORMAT (LANDSCAPE) - OPTIMIERT --- */
         @media (max-height: 500px) and (orientation: landscape) {
             .card-stage {
-                height: 80vh; /* Nutzt 80% der verfügbaren Displayhöhe */
-                width: 106.6vh; /* Behält das 4:3 Verhältnis bei */
+                /* Wir machen die Karte im Querformat etwas kleiner in der Höhe, 
+                   damit die Türen beim Aufschwingen Platz haben */
+                height: 70vh; 
+                width: 93.3vh; /* 4:3 Verhältnis */
             }
             .card-stage.is-open {
-                transform: scale(0.6); /* Schrumpft ein bisschen, damit Türen passen */
+                /* Wir zoomen ein Stück weiter raus, um den Flügeln Platz zu geben */
+                transform: scale(0.65); 
             }
-            .card-stage.is-open .door-left { transform: rotateY(-110deg); } /* Weniger weit öffnen im Querformat */
-            .card-stage.is-open .door-right { transform: rotateY(110deg); }
+            /* WICHTIG: Größerer Winkel (145 Grad), damit man den Text lesen kann */
+            .card-stage.is-open .door-left { transform: rotateY(-145deg); }
+            .card-stage.is-open .door-right { transform: rotateY(145deg); }
         }
 
         /* --- BILDER --- */
