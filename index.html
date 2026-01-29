@@ -26,8 +26,9 @@
 
         .card { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; }
 
+        /* Breite auf 50.3% erhöht für eine minimale, saubere Überlappung */
         .card-door { 
-            position: absolute; top: 0; width: 50.5%; height: 100%; 
+            position: absolute; top: 0; width: 50.3%; height: 100%; 
             z-index: 2; transform-style: preserve-3d; 
             transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1); 
         }
@@ -43,15 +44,16 @@
 
         .door-back { transform: rotateY(180deg); }
 
-        /* --- DER SEIL-FIX: PRÄZISE AUSRICHTUNG --- */
-        /* Wir rücken die Bilder an der Nahtstelle zusammen */
+        /* --- DER FINALE SEIL-FIX --- */
+        /* Wir nutzen 'right' für links und 'left' für rechts, 
+           damit die Bilder direkt an der Kante in der Mitte kleben bleiben. */
         .door-left .door-front { 
             background-image: url('https://i.postimg.cc/rwB3syyL/tu-r-aussen-links.png');
-            background-position: 1px center; /* Schiebt das linke Bild 1px nach rechts */
+            background-position: right center; 
         }
         .door-right .door-front { 
             background-image: url('https://i.postimg.cc/Qd2wCNN3/tu-r-aussen-rechts.png');
-            background-position: -1px center; /* Schiebt das rechte Bild 1px nach links */
+            background-position: left center; 
         }
 
         .card-stage.is-open .door-left { transform: rotateY(-120deg); }
@@ -71,32 +73,4 @@
         }
 
         /* --- BILDER INNEN & MITTE --- */
-        .card-inside { 
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; 
-            background-image: url('https://i.postimg.cc/yYNwrrrR/mitte.png'); 
-            background-size: 100% 100%;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.3); 
-        }
-
-        .door-left .door-back { background-image: url('https://i.postimg.cc/jdjGkkkd/tu-r-innen-links.png'); }
-        .door-right .door-back { background-image: url('https://i.postimg.cc/CxB9wngm/tu-r-innen-rechts.png'); }
-    </style>
-</head>
-<body>
-    <div class="scale-wrapper">
-        <div class="card-stage" onclick="this.classList.toggle('is-open')">
-            <div class="card">
-                <div class="card-inside"></div>
-                <div class="card-door door-left">
-                    <div class="door-face door-front"></div>
-                    <div class="door-face door-back"></div>
-                </div>
-                <div class="card-door door-right">
-                    <div class="door-face door-front"></div>
-                    <div class="door-face door-back"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-</body>
-</html>
+        .card-inside {
