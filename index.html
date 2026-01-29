@@ -16,7 +16,6 @@
             width: 100%; display: flex; justify-content: center; align-items: center; 
         }
 
-        /* DIE BÜHNE - Am PC bleibt alles wie gehabt */
         .card-stage { 
             perspective: 2000px; 
             width: 90vw; max-width: 800px; 
@@ -44,18 +43,19 @@
 
         .door-back { transform: rotateY(180deg); }
 
-        /* ÖFFNUNGSWINKEL */
-        .card-stage.is-open .door-left { transform: rotateY(-140deg); }
-        .card-stage.is-open .door-right { transform: rotateY(140deg); }
+        /* --- WINKEL FÜR PC (Große Bildschirme) --- */
+        .card-stage.is-open .door-left { transform: rotateY(-120deg); }
+        .card-stage.is-open .door-right { transform: rotateY(120deg); }
 
-        /* --- DER HANDY-FIX --- 
-           Dieser Teil wird NUR auf Geräten mit kleinem Bildschirm ausgeführt.
-           Er sorgt dafür, dass die Karte beim Öffnen schrumpft, damit die Türen
-           nicht abgeschnitten werden. Am PC bleibt scale(1). */
+        /* --- SPEZIALANPASSUNG FÜR HANDY --- */
         @media (max-width: 768px) {
+            /* Karte schrumpft am Handy beim Öffnen */
             .card-stage.is-open {
-                transform: scale(0.6); 
+                transform: scale(0.65); 
             }
+            /* Am Handy dürfen die Türen etwas weiter aufgehen (140 Grad) */
+            .card-stage.is-open .door-left { transform: rotateY(-140deg); }
+            .card-stage.is-open .door-right { transform: rotateY(140deg); }
         }
 
         /* --- BILDER --- */
