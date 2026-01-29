@@ -13,7 +13,6 @@
             min-height: 100vh; overflow-x: hidden; 
         }
 
-        /* Der Wrapper sorgt dafür, dass die Karte immer zentriert bleibt */
         .scale-wrapper { 
             width: 100%; 
             display: flex; 
@@ -26,10 +25,8 @@
         /* --- RESPONSIVE BÜHNE --- */
         .card-stage { 
             perspective: 1500px; 
-            /* Nutzt 90% der Bildschirmbreite, aber maximal 800px */
             width: 90vw; 
             max-width: 800px; 
-            /* Die Höhe passt sich proportional an (3/4 der Breite) */
             height: 67.5vw; 
             max-height: 600px;
             position: relative; 
@@ -44,7 +41,7 @@
 
         /* --- FLÜGEL --- */
         .card-door { 
-            position: absolute; top: 0; width: 50%; height: 100%; 
+            position: absolute; top: 0; width: 50.2%; height: 100%; /* 50.2% verhindert einen winzigen Spalt in der Mitte */
             z-index: 2; transform-style: preserve-3d; 
             transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1); 
         }
@@ -55,27 +52,34 @@
         .door-face { 
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
             backface-visibility: hidden; 
-            background-size: cover; 
-            background-position: center; 
+            background-size: 200% 100%; /* Bild auf doppelte Breite ziehen */
+            background-repeat: no-repeat;
         }
 
         .door-back { transform: rotateY(180deg); }
+
+        /* --- POSITIONIERUNG DER BILDER (Damit die 20 passt) --- */
+        .door-left .door-face { background-position: left center; }
+        .door-right .door-face { background-position: right center; }
 
         /* --- ANIMATION --- */
         .card-stage.is-open .door-left { transform: rotateY(-170deg); }
         .card-stage.is-open .door-right { transform: rotateY(170deg); }
 
-        /* --- BILDER --- */
+        /* --- DIE BILD-LINKS --- */
         .card-inside { 
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; 
             background-image: url('https://i.postimg.cc/yYNwrrrR/mitte.png'); 
-            background-size: cover; 
+            background-size: 100% 100%; 
             box-shadow: 0 10px 30px rgba(0,0,0,0.2); 
         }
 
+        /* Außenflächen */
         .door-left .door-front { background-image: url('https://i.postimg.cc/rwB3syyL/tu-r-aussen-links.png'); }
-        .door-left .door-back  { background-image: url('https://i.postimg.cc/jdjGkkkd/tu-r-innen-links.png'); }
         .door-right .door-front { background-image: url('https://i.postimg.cc/Qd2wCNN3/tu-r-aussen-rechts.png'); }
+
+        /* Innenflächen beim Aufklappen */
+        .door-left .door-back  { background-image: url('https://i.postimg.cc/jdjGkkkd/tu-r-innen-links.png'); }
         .door-right .door-back { background-image: url('https://i.postimg.cc/CxB9wngm/tu-r-innen-rechts.png'); }
     </style>
 </head>
